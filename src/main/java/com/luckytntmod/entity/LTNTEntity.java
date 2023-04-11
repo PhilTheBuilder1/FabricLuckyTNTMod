@@ -1,14 +1,9 @@
 package com.luckytntmod.entity;
 
-import com.luckytntmod.LuckyTNTMod;
-import com.luckytntmod.block.LTNTBlock;
 import com.luckytntmod.util.IExplosiveEntity;
 import com.luckytntmod.util.PrimedTNTEffect;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.TntEntity;
+import net.minecraft.entity.*;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -16,16 +11,18 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class LTNTEntity extends TntEntity implements IExplosiveEntity {
-    public LTNTBlock block;
+    public Block block;
     public PrimedTNTEffect effect;
+    private final World levelWorld;
 
-    public LTNTEntity(EntityType<? extends TntEntity> entityType, World world, LTNTBlock block, PrimedTNTEffect effect) {
+    public LTNTEntity(EntityType<? extends TntEntity> entityType, World world, Block block, PrimedTNTEffect effect) {
         super(entityType, world);
+        this.levelWorld = world;
         double d = world.random.nextDouble() * 6.2831854820251465;
         this.setVelocity(-Math.sin(d) * 0.02, 0.2f, -Math.cos(d) * 0.02);
-        this.setFuse(80);
         this.block = block;
         this.effect = effect;
+        this.setFuse(this.effect.getDefaultFuse(this));
     }
 
     @Override
@@ -43,6 +40,9 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
         int i = this.getFuse() - 1;
         this.setFuse(i);
         this.effect.explosionTick(this);
+        if(this.getWorld().isClient()) {
+            this.effect.spawnParticles(this);
+        }
         if (i <= 0) {
             this.discard();
             if (!this.world.isClient) {
@@ -64,7 +64,7 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
 
     @Override
     public World world() {
-        return this.getWorld();
+        return this.levelWorld;
     }
 
     @Override
@@ -92,9 +92,25 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
         return this.getPos();
     }
 
+    @Override
+    public LivingEntity owner() {
+        return this.getCausingEntity();
+    }
+
+    @Override
+    public void destroy() {
+        this.discard();
+    }
+
+    @Override
+    public void setTNTFuse(int fuse) {
+        this.setFuse(fuse);
+    }
+
     private void explode() {
         world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.MASTER, 1.0F, 1.0F);
-        effect.serverExplosion(this);
+        if(!this.getWorld().isClient())
+            effect.serverExplosion(this);
     }
 
 
@@ -103,6 +119,6 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
     }
     @Override
     public Block getBlock() {
-        return LuckyTNTMod.RH.registeredBlocks.get(0);
+        return this.block;
     }
 }

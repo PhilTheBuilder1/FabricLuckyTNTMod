@@ -8,11 +8,45 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 public class LuckyTNTModClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
+		//TNT
 		EntityRendererRegistry.register(EntityRegistry.TNT_X5, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TNT_X20, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TNT_X100, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TNT_X500, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TNT_X2000, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TNT_X10000, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.COBBLESTONE_HOUSE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.WOOD_HOUSE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.BRICK_HOUSE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.DIGGING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.DRILLING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SPHERE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.FLOATING_ISLAND, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.OCEAN_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.HELLFIRE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.FIRE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SNOW_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.FREEZE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.VAPORIZE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.GRAVITY_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.LIGHTNING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.CUBIC_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.FLOATING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TNT_FIREWORK, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SAND_FIREWORK, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ARROW_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TIMER_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.FLAT_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.MININGFLAT_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.COMPACT_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ANIMAL_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.METEOR_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SPIRAL_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ERUPTING_TNT, LTNTRenderer::new);
+
+		//Projectile
+		EntityRendererRegistry.register(EntityRegistry.METEOR, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SPIRAL_PROJECTILE, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ERUPTING_PROJECTILE, LTNTRenderer::new);
 	}
 }

@@ -29,6 +29,7 @@ public class ImprovedExplosion extends Explosion {
     public final float size;
     public final ExplosionBehavior damageCalculator;
     List<BlockPos> affectedBlocks = new ArrayList<>();
+    private static final ImprovedExplosion dummyExplosion = new ImprovedExplosion(null, new Vec3d(0, 0, 0), 0);
     public ImprovedExplosion(World world, Vec3d position, float size) {
         this(world, null, null, position, size);
     }
@@ -82,7 +83,7 @@ public class ImprovedExplosion extends Explosion {
                             }
                             BlockState blockState = world.getBlockState(pos);
                             FluidState fluidState = world.getFluidState(pos);
-                            if(!(isStrongExplosion && fluidState == Fluids.EMPTY.getDefaultState())) {
+                            if(!(isStrongExplosion && fluidState != Fluids.EMPTY.getDefaultState())) {
                                 Optional<Float> explosionResistance = damageCalculator.getBlastResistance(this, world, pos, blockState, fluidState);
                                 if(explosionResistance.isPresent()) {
                                     vecLength -= (explosionResistance.get() + 0.3f) * 0.3f * resistanceImpact;
@@ -110,6 +111,106 @@ public class ImprovedExplosion extends Explosion {
                     world.setBlockState(pos, FireBlock.getState(world, pos));
                 }
             }
+        }
+    }
+
+    public void doBlockExplosion(float xzStrength, float yStrength, float resistanceImpact, float randomVecLength, boolean isStrongExplosion, IForEachBlockExplosionEffect blockEffect) {
+        Set<BlockPos> blocks = new HashSet<>();
+        for(int offX = (int)-size; offX <= (int)size; offX++) {
+            for(int offY = (int)-size; offY <= (int)size; offY++) {
+                for(int offZ = (int)-size; offZ <= (int)size; offZ++) {
+                    if(offX == (int)-size || offX == (int)size || offY == (int)-size || offY == (int)size || offZ == (int)-size || offZ == (int)size) {
+                        double distance = Math.sqrt(offX * offX + offY * offY + offZ * offZ);
+                        double xStep = offX / distance;
+                        double yStep = offY / distance;
+                        double zStep = offZ / distance;
+                        float vecLength = size * (0.7f + (float)Math.random() * 0.6f * randomVecLength);
+                        double blockX = posX;
+                        double blockY = posY;
+                        double blockZ = posZ;
+                        for(float vecStep = 0; vecStep < vecLength; vecStep += 0.225f) {
+                            blockX += xStep * 0.3f * xzStrength;
+                            blockY += yStep * 0.3f * yStrength;
+                            blockZ += zStep * 0.3f * xzStrength;
+                            BlockPos pos = new BlockPos(blockX, blockY, blockZ);
+                            if(!world.isInBuildLimit(pos)) {
+                                break;
+                            }
+                            BlockState blockState = world.getBlockState(pos);
+                            FluidState fluidState = world.getFluidState(pos);
+                            if(!(isStrongExplosion && fluidState != Fluids.EMPTY.getDefaultState())) {
+                                Optional<Float> explosionResistance = damageCalculator.getBlastResistance(this, world, pos, blockState, fluidState);
+                                if(explosionResistance.isPresent()) {
+                                    vecLength -= (explosionResistance.get() + 0.3f) * 0.3f * resistanceImpact;
+                                }
+                                if(vecLength > 0 && damageCalculator.canDestroyBlock(this, world, pos, blockState, vecLength) && blockState.getMaterial() != Material.AIR) {
+                                    blocks.add(pos);
+                                }
+                            }
+                            else {
+                                blocks.add(pos);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        affectedBlocks.addAll(blocks);
+        for(BlockPos pos : blocks) {
+            double distance = Math.sqrt(pos.getSquaredDistance(posX, posY, posZ));
+            blockEffect.doBlockExplosion(world, pos, world.getBlockState(pos), distance);
+        }
+    }
+
+    public void doBlockExplosion(float xzStrength, float yStrength, float resistanceImpact, float randomVecLength, boolean isStrongExplosion, IBlockExplosionCondition condition, IForEachBlockExplosionEffect blockEffect) {
+        Set<BlockPos> blocks = new HashSet<>();
+        for(int offX = (int)-size; offX <= (int)size; offX++) {
+            for(int offY = (int)-size; offY <= (int)size; offY++) {
+                for(int offZ = (int)-size; offZ <= (int)size; offZ++) {
+                    if(offX == (int)-size || offX == (int)size || offY == (int)-size || offY == (int)size || offZ == (int)-size || offZ == (int)size) {
+                        double distance = Math.sqrt(offX * offX + offY * offY + offZ * offZ);
+                        double xStep = offX / distance;
+                        double yStep = offY / distance;
+                        double zStep = offZ / distance;
+                        float vecLength = size * (0.7f + (float)Math.random() * 0.6f * randomVecLength);
+                        double blockX = posX;
+                        double blockY = posY;
+                        double blockZ = posZ;
+                        for(float vecStep = 0; vecStep < vecLength; vecStep += 0.225f) {
+                            blockX += xStep * 0.3f * xzStrength;
+                            blockY += yStep * 0.3f * yStrength;
+                            blockZ += zStep * 0.3f * xzStrength;
+                            BlockPos pos = new BlockPos(blockX, blockY, blockZ);
+                            if(!world.isInBuildLimit(pos)) {
+                                break;
+                            }
+                            BlockState blockState = world.getBlockState(pos);
+                            FluidState fluidState = world.getFluidState(pos);
+                            if(!(isStrongExplosion && fluidState != Fluids.EMPTY.getDefaultState())) {
+                                Optional<Float> explosionResistance = damageCalculator.getBlastResistance(this, world, pos, blockState, fluidState);
+                                if(explosionResistance.isPresent()) {
+                                    vecLength -= (explosionResistance.get() + 0.3f) * 0.3f * resistanceImpact;
+                                }
+                                if(vecLength > 0 && damageCalculator.canDestroyBlock(this, world, pos, blockState, vecLength) && blockState.getMaterial() != Material.AIR) {
+                                    if(condition.conditionMet(world, pos, blockState, distance)) {
+                                        blocks.add(pos);
+                                    }
+                                }
+                            }
+                            else {
+                                if(condition.conditionMet(world, pos, blockState, distance)) {
+                                    blocks.add(pos);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        affectedBlocks.addAll(blocks);
+        for(BlockPos pos : blocks) {
+            double distance = Math.sqrt(pos.getSquaredDistance(posX, posY, posZ));
+            blockEffect.doBlockExplosion(world, pos, world.getBlockState(pos), distance);
         }
     }
 
@@ -163,5 +264,9 @@ public class ImprovedExplosion extends Explosion {
 
     public Vec3d getPosition() {
         return new Vec3d(posX, posY, posZ);
+    }
+
+    public static ImprovedExplosion dummyExplosion() {
+        return dummyExplosion;
     }
 }

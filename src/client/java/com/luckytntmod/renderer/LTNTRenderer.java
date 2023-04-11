@@ -1,8 +1,8 @@
 package com.luckytntmod.renderer;
 
 import com.luckytntmod.LuckyTNTMod;
-import com.luckytntmod.entity.LTNTEntity;
-import net.minecraft.block.Blocks;
+import com.luckytntmod.util.IExplosiveEntity;
+import net.minecraft.block.TntBlock;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -10,19 +10,17 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.TntMinecartEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.TntEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
+import org.joml.Math;
 
 
 public class LTNTRenderer extends EntityRenderer<Entity> {
-    private BlockRenderManager blockRender;
+    private final BlockRenderManager blockRenderer;
 
     private static final String NAMESPACE = LuckyTNTMod.NAMESPACE;
     public LTNTRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-        this.blockRender = ctx.getBlockRenderManager();
+        this.blockRenderer = ctx.getBlockRenderManager();
     }
 
     @Override
@@ -30,26 +28,25 @@ public class LTNTRenderer extends EntityRenderer<Entity> {
         return null;
     }
     @Override
-    public void render(Entity entity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        matrixStack.push();
-        matrixStack.translate(0.0F, 0.5F, 0.0F);
-        LTNTEntity ltntEntity = (LTNTEntity) entity;
-        int j = ltntEntity.getFuse();
-        if ((float)j - g + 1.0F < 10.0F) {
-            float h = 1.0F - ((float)j - g + 1.0F) / 10.0F;
-            h = MathHelper.clamp(h, 0.0F, 1.0F);
-            h *= h;
-            h *= h;
-            float k = 1.0F + h * 0.3F;
-            matrixStack.scale(k, k, k);
+    public void render(Entity entity, float yaw, float partialTicks, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light) {
+        if(entity instanceof IExplosiveEntity ent) {
+            matrixStack.push();
+            matrixStack.translate(0, 0, 0);
+            int i = ent.getTNTFuse();
+            if ((float) i - partialTicks + 1.0F < 10.0F && ent.getEffect().getBlockState((IExplosiveEntity) entity).getBlock() instanceof TntBlock) {
+                float f = 1.0F - ((float)i - partialTicks + 1.0F) / 10.0F;
+                f = Math.clamp(f, 0.0F, 1.0F);
+                f *= f;
+                f *= f;
+                float f1 = 1.0F + f * 0.3F;
+                matrixStack.scale(f1, f1, f1);
+            }
+            matrixStack.scale(ent.getEffect().getSize((IExplosiveEntity)entity), ent.getEffect().getSize((IExplosiveEntity)entity), ent.getEffect().getSize((IExplosiveEntity)entity));
+            matrixStack.translate(-0.5d, 0, -0.5d);
+            TntMinecartEntityRenderer.renderFlashingBlock(blockRenderer, ent.getBlock().getDefaultState(), matrixStack, vertexConsumerProvider, light, ent.getBlock() instanceof TntBlock && i / 5 % 2 == 0);
+            matrixStack.pop();
         }
-
-        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-90.0F));
-        matrixStack.translate(-0.5F, -0.5F, 0.5F);
-        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90.0F));
-        TntMinecartEntityRenderer.renderFlashingBlock(this.blockRender, ltntEntity.block.getDefaultState(), matrixStack, vertexConsumerProvider, i, j / 5 % 2 == 0);
-        matrixStack.pop();
-        super.render(entity, f, g, matrixStack, vertexConsumerProvider, i);
+        super.render(entity, yaw, partialTicks, matrixStack, vertexConsumerProvider, light);
     }
 
     /*@Override
