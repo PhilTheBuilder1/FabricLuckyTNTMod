@@ -3,6 +3,7 @@ package com.luckytntmod.util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -27,4 +28,5 @@ public interface IExplosiveEntity {
     void setTNTFuse(int fuse);
 
     PrimedTNTEffect getEffect();
+    NbtCompound getPersistentData();
 }

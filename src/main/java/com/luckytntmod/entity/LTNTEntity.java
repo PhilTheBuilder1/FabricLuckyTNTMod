@@ -4,6 +4,7 @@ import com.luckytntmod.util.IExplosiveEntity;
 import com.luckytntmod.util.PrimedTNTEffect;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -14,6 +15,7 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
     public Block block;
     public PrimedTNTEffect effect;
     private final World levelWorld;
+    private final NbtCompound compound;
 
     public LTNTEntity(EntityType<? extends TntEntity> entityType, World world, Block block, PrimedTNTEffect effect) {
         super(entityType, world);
@@ -23,6 +25,7 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
         this.block = block;
         this.effect = effect;
         this.setFuse(this.effect.getDefaultFuse(this));
+        this.compound = new NbtCompound();
     }
 
     @Override
@@ -36,14 +39,11 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
         if (this.onGround) {
             this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
         }
-
-        int i = this.getFuse() - 1;
-        this.setFuse(i);
-        this.effect.explosionTick(this);
+        this.effect.baseTick(this);
         if(this.getWorld().isClient()) {
             this.effect.spawnParticles(this);
         }
-        if (i <= 0) {
+        if (this.getFuse() <= 0) {
             this.discard();
             if (!this.world.isClient) {
                 this.explode();
@@ -117,6 +117,12 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
     public PrimedTNTEffect getEffect() {
         return this.effect;
     }
+
+    @Override
+    public NbtCompound getPersistentData() {
+        return compound;
+    }
+
     @Override
     public Block getBlock() {
         return this.block;

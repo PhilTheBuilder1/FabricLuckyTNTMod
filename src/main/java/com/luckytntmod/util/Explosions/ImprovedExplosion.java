@@ -58,6 +58,10 @@ public class ImprovedExplosion extends Explosion {
         this.size = power;
         damageCalculator = explodingEntity == null ? new ExplosionBehavior() : new EntityExplosionBehavior(explodingEntity);
     }
+
+    public void doBlockExplosion(IForEachBlockExplosionEffect effect) {
+        this.doBlockExplosion(1f, 1f, 1f, 1f, false, effect);
+    }
     
     public void doBlockExplosion(float xzStrength, float yStrength, float resistanceImpact, float randomVecLength, boolean fire, boolean isStrongExplosion) {
         Set<BlockPos> blocks = new HashSet<>();

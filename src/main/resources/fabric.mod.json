@@ -2,14 +2,13 @@
 	"schemaVersion": 1,
 	"id": "fabricluckytntmod",
 	"version": "${version}",
-	"name": "FabricLuckyTNTMod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Lucky TNT Mod Fabric",
+	"description": "Fabric port of the lucky tnt mod",
 	"authors": [
-		"Me!"
+		"PhilTheBuilder"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/PhilTheBuilder1/FabricLuckyTNTMod"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/fabricluckytntmod/icon.png",

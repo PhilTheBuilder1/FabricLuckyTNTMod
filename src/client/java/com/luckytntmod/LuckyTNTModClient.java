@@ -43,10 +43,28 @@ public class LuckyTNTModClient implements ClientModInitializer {
 		EntityRendererRegistry.register(EntityRegistry.METEOR_TNT, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.SPIRAL_TNT, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.ERUPTING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.GROVE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.METEOR_SHOWER, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.INVERTED_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ENDER_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.NUCLEAR_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.CHEMICAL_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.REACTION_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.EASTER_EGG, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.DAY_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.NIGHT_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.VILLAGE_DEFENSE, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ZOMBIE_APOCALYPSE, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SHATTERPROOF_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.GRAVEL_FIREWORK, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.LAVA_OCEAN_TNT, LTNTRenderer::new);
 
 		//Projectile
 		EntityRendererRegistry.register(EntityRegistry.METEOR, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.SPIRAL_PROJECTILE, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.ERUPTING_PROJECTILE, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.MINI_METEOR, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.LITTLE_METEOR, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.CHEMICAL_PROJECTILE, LTNTRenderer::new);
 	}
 }

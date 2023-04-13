@@ -68,12 +68,22 @@ public class LTNTBlock extends TntBlock {
         }
     }
 
+    private static void primeTnt(World world, BlockPos pos, @Nullable LivingEntity igniter, LTNTBlock block) {
+        if (!world.isClient()) {
+            LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
+            if(tnt == null) return;
+            world.spawnEntity(tnt);
+            world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
+            world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+        }
+    }
+
     @Override
     public void onDestroyedByExplosion(World world, BlockPos pos, Explosion explosion) {
         if (world.isClient) {
             return;
         }
-        primeTnt(world, pos, explosion.getCausingEntity());
+        primeTnt(world, pos, explosion.getCausingEntity(), this);
     }
 
     @Override

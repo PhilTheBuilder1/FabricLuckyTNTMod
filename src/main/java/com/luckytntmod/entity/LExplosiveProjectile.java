@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +31,7 @@ public class LExplosiveProjectile extends ArrowEntity implements IExplosiveEntit
     private final Block block;
 
     private static final TrackedData<Integer> FUSE = DataTracker.registerData(LExplosiveProjectile.class, TrackedDataHandlerRegistry.INTEGER);
+    private final NbtCompound compound;
 
 
     public LExplosiveProjectile(EntityType<LExplosiveProjectile> type, World level, PrimedTNTEffect effect) {
@@ -41,6 +41,7 @@ public class LExplosiveProjectile extends ArrowEntity implements IExplosiveEntit
         this.setTNTFuse(effect.getDefaultFuse(this));
         this.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
         this.block = null;
+        this.compound = new NbtCompound();
     }
 
     public LExplosiveProjectile(EntityType<LExplosiveProjectile> type, World level, PrimedTNTEffect effect, Block block) {
@@ -50,6 +51,7 @@ public class LExplosiveProjectile extends ArrowEntity implements IExplosiveEntit
         this.setTNTFuse(effect.getDefaultFuse(this));
         this.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
         this.block = block;
+        this.compound = new NbtCompound();
     }
 
     @Override
@@ -127,6 +129,11 @@ public class LExplosiveProjectile extends ArrowEntity implements IExplosiveEntit
 
     public PrimedTNTEffect getEffect() {
         return effect;
+    }
+
+    @Override
+    public NbtCompound getPersistentData() {
+        return compound;
     }
 
     public boolean inGround() {

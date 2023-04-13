@@ -5,6 +5,7 @@ import com.luckytntmod.entity.LExplosiveProjectile;
 import com.luckytntmod.entity.LTNTEntity;
 import com.luckytntmod.tnteffects.*;
 import com.luckytntmod.tnteffects.projectiles.MeteorEffect;
+import com.luckytntmod.tnteffects.projectiles.MiniMeteorEffect;
 import com.luckytntmod.util.TNTXStrengthEffect;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TntBlock;
@@ -47,9 +48,28 @@ public class EntityRegistry {
     public static final EntityType<LTNTEntity> METEOR_TNT = LuckyTNTMod.RH.registerTNTEntity("meteor_tnt", BlockRegistry.METEOR_TNT, new MeteorTNTEffect());
     public static final EntityType<LTNTEntity> SPIRAL_TNT = LuckyTNTMod.RH.registerTNTEntity("spiral_tnt", BlockRegistry.SPIRAL_TNT, new SpiralTNTEffect());
     public static final EntityType<LTNTEntity> ERUPTING_TNT = LuckyTNTMod.RH.registerTNTEntity("erupting_tnt", BlockRegistry.ERUPTING_TNT, new EruptingTNTEffect());
+    public static final EntityType<LTNTEntity> GROVE_TNT = LuckyTNTMod.RH.registerTNTEntity("grove_tnt", BlockRegistry.GROVE_TNT, new GroveTNTEffect(20));
+    public static final EntityType<LTNTEntity> ENDER_TNT = LuckyTNTMod.RH.registerTNTEntity("ender_tnt", BlockRegistry.ENDER_TNT, new EnderTNTEffect(20));
+    public static final EntityType<LTNTEntity> METEOR_SHOWER = LuckyTNTMod.RH.registerTNTEntity("meteor_shower", BlockRegistry.METEOR_SHOWER, new MeteorShowerEffect());
+    public static final EntityType<LTNTEntity> INVERTED_TNT = LuckyTNTMod.RH.registerTNTEntity("inverted_tnt", BlockRegistry.INVERTED_TNT, new InvertedTNTEffect());
+    public static final EntityType<LTNTEntity> NUCLEAR_TNT = LuckyTNTMod.RH.registerTNTEntity("nuclear_tnt", BlockRegistry.NUCLEAR_TNT, new NuclearTNTEffect(50));
+    public static final EntityType<LTNTEntity> CHEMICAL_TNT = LuckyTNTMod.RH.registerTNTEntity("chemical_tnt", BlockRegistry.CHEMICAL_TNT, new ChemicalTNTEffect());
+    public static final EntityType<LTNTEntity> REACTION_TNT = LuckyTNTMod.RH.registerTNTEntity("reaction_tnt", BlockRegistry.REACTION_TNT, new ReactionTNTEffect());
+    public static final EntityType<LTNTEntity> EASTER_EGG = LuckyTNTMod.RH.registerTNTEntity("easter_egg", BlockRegistry.EASTER_EGG, new EasterEggEffect());
+    public static final EntityType<LTNTEntity> DAY_TNT = LuckyTNTMod.RH.registerTNTEntity("day_tnt", BlockRegistry.DAY_TNT, new DayTNTEffect());
+    public static final EntityType<LTNTEntity> NIGHT_TNT = LuckyTNTMod.RH.registerTNTEntity("night_tnt", BlockRegistry.NIGHT_TNT, new NightTNTEffect());
+    public static final EntityType<LTNTEntity> VILLAGE_DEFENSE = LuckyTNTMod.RH.registerTNTEntity("village_defense", BlockRegistry.VILLAGE_DEFENSE, new VillageDefenseEffect());
+    public static final EntityType<LTNTEntity> ZOMBIE_APOCALYPSE = LuckyTNTMod.RH.registerTNTEntity("zombie_apocalypse", BlockRegistry.ZOMBIE_APOCALYPSE, new ZombieApocalypseEffect());
+    public static final EntityType<LTNTEntity> SHATTERPROOF_TNT = LuckyTNTMod.RH.registerTNTEntity("shatterproof_tnt", BlockRegistry.SHATTERPROOF_TNT, new ShatterproofTNTEffect());
+    public static final EntityType<LTNTEntity> GRAVEL_FIREWORK = LuckyTNTMod.RH.registerTNTEntity("gravel_firework", BlockRegistry.GRAVEL_FIREWORK, new GravelFireworkEffect());
+    public static final EntityType<LTNTEntity> LAVA_OCEAN_TNT = LuckyTNTMod.RH.registerTNTEntity("lava_ocean_tnt", BlockRegistry.LAVA_OCEAN_TNT, new LavaOceanTNTEffect(15, 10));
+
 
     //Explosive Projectiles
     public static final EntityType<LExplosiveProjectile> METEOR = LuckyTNTMod.RH.registerExplosiveProjectile("meteor", new MeteorEffect(53, 2f), 2f, Blocks.MAGMA_BLOCK);
     public static final EntityType<LExplosiveProjectile> SPIRAL_PROJECTILE = LuckyTNTMod.RH.registerExplosiveProjectile("spiral_projectile", new SpiralTNTEffect(), 1f, BlockRegistry.SPIRAL_TNT);
     public static final EntityType<LExplosiveProjectile> ERUPTING_PROJECTILE = LuckyTNTMod.RH.registerExplosiveProjectile("erupting_projectile", new EruptingTNTEffect(), 1f, BlockRegistry.ERUPTING_TNT);
+    public static final EntityType<LExplosiveProjectile> LITTLE_METEOR = LuckyTNTMod.RH.registerExplosiveProjectile("little_meteor", new MeteorEffect(20, 1.5f), 1.5f, Blocks.MAGMA_BLOCK);
+    public static final EntityType<LExplosiveProjectile> MINI_METEOR = LuckyTNTMod.RH.registerExplosiveProjectile("mini_meteor", new MiniMeteorEffect(), 1f, Blocks.MAGMA_BLOCK);
+    public static final EntityType<LExplosiveProjectile> CHEMICAL_PROJECTILE = LuckyTNTMod.RH.registerExplosiveProjectile("chemical_projectile", new ChemicalTNTEffect(), 1f, Blocks.AIR);
 }
