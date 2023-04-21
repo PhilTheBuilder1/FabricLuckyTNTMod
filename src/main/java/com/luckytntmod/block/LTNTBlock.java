@@ -2,6 +2,7 @@ package com.luckytntmod.block;
 
 import com.luckytntmod.LuckyTNTMod;
 import com.luckytntmod.entity.LTNTEntity;
+import com.luckytntmod.entity.LivingPrimedLTNT;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -32,11 +33,29 @@ import java.util.List;
 public class LTNTBlock extends TntBlock {
     int index;
     public String tab;
+    boolean living = false;
+    boolean shouldRandomlyFuse = true;
     public LTNTBlock(Settings settings, int index, String tab) {
         super(settings);
         this.index = index;
         this.tab = tab;
     }
+
+    public LTNTBlock(Settings settings, int index, String tab, boolean isLivingTNT) {
+        super(settings);
+        this.index = index;
+        this.tab = tab;
+        this.living = isLivingTNT;
+    }
+
+    public LTNTBlock(Settings settings, int index, String tab, boolean isLivingTNT, boolean shouldRandomlyFuse) {
+        super(settings);
+        this.index = index;
+        this.tab = tab;
+        this.living = isLivingTNT;
+        this.shouldRandomlyFuse = shouldRandomlyFuse;
+    }
+
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (!itemStack.isOf(Items.FLINT_AND_STEEL) && !itemStack.isOf(Items.FIRE_CHARGE)) {
@@ -57,24 +76,54 @@ public class LTNTBlock extends TntBlock {
             return ActionResult.success(world.isClient);
         }
     }
-    private static void primeTnt(World world, BlockPos pos, @Nullable LivingEntity igniter) {
+    public static void primeTnt(World world, BlockPos pos, @Nullable LivingEntity igniter) {
         if (!world.isClient()) {
             LTNTBlock block = (LTNTBlock) world.getBlockState(pos).getBlock();
-            LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
-            if(tnt == null) return;
-            world.spawnEntity(tnt);
-            world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
-            world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+            if(block.living) {
+                LivingPrimedLTNT tnt = LuckyTNTMod.RH.registeredLivingEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
+                if(tnt == null) return;
+                world.spawnEntity(tnt);
+                world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
+                world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+                if(!block.shouldRandomlyFuse) {
+                    tnt.setVelocity(0, 0, 0);
+                }
+            }
+            else {
+                LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
+                if(tnt == null) return;
+                world.spawnEntity(tnt);
+                world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
+                world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+                if(!block.shouldRandomlyFuse) {
+                    tnt.setVelocity(0, 0, 0);
+                }
+            }
         }
     }
 
-    private static void primeTnt(World world, BlockPos pos, @Nullable LivingEntity igniter, LTNTBlock block) {
+    public static void primeTnt(World world, BlockPos pos, @Nullable LivingEntity igniter, LTNTBlock block) {
         if (!world.isClient()) {
-            LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
-            if(tnt == null) return;
-            world.spawnEntity(tnt);
-            world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
-            world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+            if(block.living) {
+                LivingPrimedLTNT tnt = LuckyTNTMod.RH.registeredLivingEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
+                if(tnt == null) return;
+                world.spawnEntity(tnt);
+                world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
+                world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+                if(!block.shouldRandomlyFuse) {
+                    tnt.setVelocity(0, 0, 0);
+                }
+            }
+            else {
+                LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
+                if(tnt == null) return;
+                world.spawnEntity(tnt);
+                world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
+                world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+                if(!block.shouldRandomlyFuse) {
+                    tnt.setVelocity(0, 0, 0);
+                }
+            }
         }
     }
 
@@ -94,12 +143,7 @@ public class LTNTBlock extends TntBlock {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         if(world.isReceivingRedstonePower(pos) && !world.isClient()) {
-            LTNTBlock block = (LTNTBlock) world.getBlockState(pos).getBlock();
-            LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
-            if(tnt == null) return;
-            world.spawnEntity(tnt);
-            world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
-            world.emitGameEvent(null, GameEvent.PRIME_FUSE, pos);
+            primeTnt(world, pos, null);
             world.removeBlock(pos, false);
         }
     }
@@ -110,12 +154,7 @@ public class LTNTBlock extends TntBlock {
             return;
         }
         if (world.isReceivingRedstonePower(pos)) {
-            LTNTBlock block = (LTNTBlock) world.getBlockState(pos).getBlock();
-            LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
-            if(tnt == null) return;
-            world.spawnEntity(tnt);
-            world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
-            world.emitGameEvent(null, GameEvent.PRIME_FUSE, pos);
+            primeTnt(world, pos, null);
             world.removeBlock(pos, false);
         }
     }

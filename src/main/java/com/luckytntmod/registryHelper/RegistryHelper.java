@@ -4,9 +4,10 @@ import com.luckytntmod.LuckyTNTMod;
 import com.luckytntmod.block.LTNTBlock;
 import com.luckytntmod.entity.LExplosiveProjectile;
 import com.luckytntmod.entity.LTNTEntity;
-import com.luckytntmod.util.IExplosiveEntity;
+import com.luckytntmod.entity.LivingPrimedLTNT;
 import com.luckytntmod.util.PrimedTNTEffect;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -16,26 +17,63 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RegistryHelper {
     private static final String NAMESPACE = LuckyTNTMod.NAMESPACE;
     public final ArrayList<LTNTBlock> registeredBlocks = new ArrayList<>();
     public final ArrayList<EntityType<LTNTEntity>> registeredEntities = new ArrayList<>();
+    public final ArrayList<EntityType<LivingPrimedLTNT>> registeredLivingEntities = new ArrayList<>();
+    public static final List<Pair<LTNTBlock, Item>> TNT_DISPENSER_REGISTRY_LIST = new ArrayList<>();
     private int index = 0;
+    private int livingIndex = 0;
 
     public LTNTBlock registerTNTBlock(String registryName, String tab) {
         LTNTBlock block = new LTNTBlock(AbstractBlock.Settings.of(Material.TNT, DyeColor.BLACK).dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), index, tab);
         Registry.register(Registries.BLOCK, new Identifier(NAMESPACE, registryName), block);
-        Registry.register(Registries.ITEM, new Identifier(NAMESPACE, registryName), new BlockItem(block, new FabricItemSettings()));
+        Item item = Registry.register(Registries.ITEM, new Identifier(NAMESPACE, registryName), new BlockItem(block, new FabricItemSettings()));
         registeredBlocks.add(block);
         index++;
+        TNT_DISPENSER_REGISTRY_LIST.add(new Pair<>(block, item));
+        return block;
+    }
+
+    public LTNTBlock registerTNTBlock(String registryName, String tab, boolean isLivingTNT) {
+        LTNTBlock block = new LTNTBlock(AbstractBlock.Settings.of(Material.TNT, DyeColor.BLACK).dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), isLivingTNT ? livingIndex : index, tab, isLivingTNT);
+        Registry.register(Registries.BLOCK, new Identifier(NAMESPACE, registryName), block);
+        Item item = Registry.register(Registries.ITEM, new Identifier(NAMESPACE, registryName), new BlockItem(block, new FabricItemSettings()));
+        registeredBlocks.add(block);
+        if(isLivingTNT) {
+            livingIndex++;
+        }
+        else {
+            index++;
+        }
+        TNT_DISPENSER_REGISTRY_LIST.add(new Pair<>(block, item));
+        return block;
+    }
+
+    public LTNTBlock registerTNTBlock(String registryName, String tab, boolean isLivingTNT, boolean shouldRandomlyFuse) {
+        LTNTBlock block = new LTNTBlock(AbstractBlock.Settings.of(Material.TNT, DyeColor.BLACK).dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), isLivingTNT ? livingIndex : index, tab, isLivingTNT, shouldRandomlyFuse);
+        Registry.register(Registries.BLOCK, new Identifier(NAMESPACE, registryName), block);
+        Item item = Registry.register(Registries.ITEM, new Identifier(NAMESPACE, registryName), new BlockItem(block, new FabricItemSettings()));
+        registeredBlocks.add(block);
+        if(isLivingTNT) {
+            livingIndex++;
+        }
+        else {
+            index++;
+        }
+        TNT_DISPENSER_REGISTRY_LIST.add(new Pair<>(block, item));
         return block;
     }
 
@@ -67,5 +105,14 @@ public class RegistryHelper {
         return entity;
     }
 
-
+    public EntityType<LivingPrimedLTNT> registerLivingTNTEntity(String registryName, EntityType<LivingPrimedLTNT> TNT) {
+        EntityType<LivingPrimedLTNT> entity = Registry.register(
+                Registries.ENTITY_TYPE,
+                new Identifier(NAMESPACE, registryName),
+                TNT
+                );
+        registeredLivingEntities.add(entity);
+        FabricDefaultAttributeRegistry.register(entity, LivingPrimedLTNT.setAttributes());
+        return entity;
+    }
 }

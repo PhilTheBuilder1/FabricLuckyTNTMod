@@ -18,13 +18,11 @@ public class BlockRegistry {
         LuckyTNTMod.LOGGER.info("Hello there");
     }
 
-    //TNT
+    //Normal TNT
     public static final LTNTBlock TNT_X5 = LuckyTNTMod.RH.registerTNTBlock("tnt_x5", "n");
     public static final LTNTBlock TNT_X20 = LuckyTNTMod.RH.registerTNTBlock("tnt_x20", "n");
     public static final LTNTBlock TNT_X100 = LuckyTNTMod.RH.registerTNTBlock("tnt_x100", "n");
     public static final LTNTBlock TNT_X500 = LuckyTNTMod.RH.registerTNTBlock("tnt_x500", "n");
-    public static final LTNTBlock TNT_X2000 = LuckyTNTMod.RH.registerTNTBlock("tnt_x2000", "g");
-    public static final LTNTBlock TNT_X10000 = LuckyTNTMod.RH.registerTNTBlock("tnt_x10000", "d");
     public static final LTNTBlock COBBLESTONE_HOUSE_TNT = LuckyTNTMod.RH.registerTNTBlock("cobblestone_house_tnt", "n");
     public static final LTNTBlock WOOD_HOUSE_TNT = LuckyTNTMod.RH.registerTNTBlock("woodhouse_tnt", "n");
     public static final LTNTBlock BRICK_HOUSE_TNT = LuckyTNTMod.RH.registerTNTBlock("brickhouse_tnt", "n");
@@ -68,6 +66,21 @@ public class BlockRegistry {
     public static final LTNTBlock SHATTERPROOF_TNT = LuckyTNTMod.RH.registerTNTBlock("shatterproof_tnt", "n");
     public static final LTNTBlock GRAVEL_FIREWORK = LuckyTNTMod.RH.registerTNTBlock("gravel_firework", "n");
     public static final LTNTBlock LAVA_OCEAN_TNT = LuckyTNTMod.RH.registerTNTBlock("lava_ocean_tnt", "n");
+    public static final LTNTBlock ATTACKING_TNT = LuckyTNTMod.RH.registerTNTBlock("attacking_tnt", "n", true);
+    public static final LTNTBlock WALKING_TNT = LuckyTNTMod.RH.registerTNTBlock("walking_tnt", "n", true);
+    public static final LTNTBlock WOOL_TNT = LuckyTNTMod.RH.registerTNTBlock("wool_tnt", "n");
+    public static final LTNTBlock SAY_GOODBYE = LuckyTNTMod.RH.registerTNTBlock("say_goodbye", "n");
+    public static final LTNTBlock WITHERING_TNT = LuckyTNTMod.RH.registerTNTBlock("withering_tnt", "n");
+    public static final LTNTBlock NUCLEAR_WASTE_TNT = LuckyTNTMod.RH.registerTNTBlock("nuclear_waste_tnt", "n");
+    public static final LTNTBlock STATIC_TNT = LuckyTNTMod.RH.registerTNTBlock("static_tnt", "n", false, false);
+
+    //God TNT
+    public static final LTNTBlock TNT_X2000 = LuckyTNTMod.RH.registerTNTBlock("tnt_x2000", "g");
+    public static final LTNTBlock TSAR_BOMB = LuckyTNTMod.RH.registerTNTBlock("tsar_bomba", "g");
+
+    //Doomsday TNT
+    public static final LTNTBlock TNT_X10000 = LuckyTNTMod.RH.registerTNTBlock("tnt_x10000", "d");
+    public static final LTNTBlock HYDROGEN_BOMB = LuckyTNTMod.RH.registerTNTBlock("hydrogen_bomb", "d");
 
     //Other
     public static final Block NUCLEAR_WASTE = Registry.register(Registries.BLOCK, new Identifier(LuckyTNTMod.NAMESPACE, "nuclear_waste"), new NuclearWasteBlock(AbstractBlock.Settings.of(Material.SNOW_LAYER, DyeColor.GREEN).sounds(BlockSoundGroup.SLIME).luminance(state -> 8).breakInstantly().noCollision().dropsNothing().ticksRandomly()));

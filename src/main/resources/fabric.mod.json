@@ -3,7 +3,7 @@
 	"id": "fabricluckytntmod",
 	"version": "${version}",
 	"name": "Lucky TNT Mod Fabric",
-	"description": "Fabric port of the lucky tnt mod",
+	"description": "Fabric port of the Lucky TNT Mod, huge thanks goes to SlimingHD and Fleshcrafter for allowing this!",
 	"authors": [
 		"PhilTheBuilder"
 	],

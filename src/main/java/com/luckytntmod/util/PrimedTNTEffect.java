@@ -3,6 +3,7 @@ package com.luckytntmod.util;
 import com.luckytntmod.LuckyTNTMod;
 import com.luckytntmod.entity.LExplosiveProjectile;
 import com.luckytntmod.entity.LTNTEntity;
+import com.luckytntmod.entity.LivingPrimedLTNT;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -68,7 +69,7 @@ public abstract class PrimedTNTEffect {
     public void baseTick(IExplosiveEntity entity) {
         World level = entity.world();
         if(level == null) return;
-        if(entity instanceof LTNTEntity) {
+        if(entity instanceof LTNTEntity || entity instanceof LivingPrimedLTNT) {
             if(entity.getTNTFuse() <= 0) {
                 if(entity.world() instanceof ServerWorld) {
                     if(playsSound()) {

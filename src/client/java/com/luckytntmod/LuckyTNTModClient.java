@@ -1,6 +1,7 @@
 package com.luckytntmod;
 
 import com.luckytntmod.registries.EntityRegistry;
+import com.luckytntmod.renderer.BombRenderer;
 import com.luckytntmod.renderer.LTNTRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -58,6 +59,15 @@ public class LuckyTNTModClient implements ClientModInitializer {
 		EntityRendererRegistry.register(EntityRegistry.SHATTERPROOF_TNT, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.GRAVEL_FIREWORK, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.LAVA_OCEAN_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ATTACKING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.WALKING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.WOOL_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SAY_GOODBYE, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.WITHERING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.NUCLEAR_WASTE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.STATIC_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TSAR_BOMB, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.HYDROGEN_BOMB, LTNTRenderer::new);
 
 		//Projectile
 		EntityRendererRegistry.register(EntityRegistry.METEOR, LTNTRenderer::new);
@@ -66,5 +76,7 @@ public class LuckyTNTModClient implements ClientModInitializer {
 		EntityRendererRegistry.register(EntityRegistry.MINI_METEOR, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.LITTLE_METEOR, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.CHEMICAL_PROJECTILE, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TSAR_BOMB_BOMB, BombRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.HYDROGEN_BOMB_BOMB, BombRenderer::new);
 	}
 }

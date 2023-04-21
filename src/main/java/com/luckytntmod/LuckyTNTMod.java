@@ -1,16 +1,25 @@
 package com.luckytntmod;
 
 import com.luckytntmod.block.LTNTBlock;
+import com.luckytntmod.entity.LivingPrimedLTNT;
 import com.luckytntmod.registries.BlockRegistry;
+import com.luckytntmod.registries.EntityRegistry;
+import com.luckytntmod.registries.SoundRegistry;
 import com.luckytntmod.registryHelper.RegistryHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +38,19 @@ public class LuckyTNTMod implements ModInitializer {
 		BlockRegistry.init();
 		registerGroups();
 		addItemsToGroup();
+		SoundRegistry.register();
+		for(Pair<LTNTBlock, Item> pair : RegistryHelper.TNT_DISPENSER_REGISTRY_LIST) {
+			LTNTBlock block = pair.getLeft();
+			Item item = pair.getRight();
+			DispenserBehavior behaviour = (source, stack) -> {
+				World level = source.getWorld();
+				BlockPos pos = new BlockPos(DispenserBlock.getOutputLocation(source));
+				LTNTBlock.primeTnt(level, pos, null, block);
+				stack.decrement(1);
+				return stack;
+			};
+			DispenserBlock.registerBehavior(item, behaviour);
+		}
 	}
 
 	public static void registerGroups() {
