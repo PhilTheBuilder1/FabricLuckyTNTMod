@@ -45,6 +45,8 @@ public class TsarBombBombEffect extends PrimedTNTEffect implements NuclearBombLi
                 }
             }
         }
+
+        entity.destroy();
     }
 
     @Override

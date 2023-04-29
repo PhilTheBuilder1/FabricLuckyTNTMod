@@ -73,7 +73,7 @@ public class LExplosiveProjectile extends ArrowEntity implements IExplosiveEntit
         Vec3d pos2 = pos.normalize().multiply(0.05F);
         this.setPos(this.getX() - pos2.x, this.getY() - pos2.y, this.getZ() - pos2.z);
         inGround = true;
-        this.effect.baseTick(this);
+        //this.effect.baseTick(this);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class LExplosiveProjectile extends ArrowEntity implements IExplosiveEntit
         else {
             hitEntity = true;
         }
-        this.effect.baseTick(this);
+        //this.effect.baseTick(this);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class LExplosiveProjectile extends ArrowEntity implements IExplosiveEntit
         else {
             hitEntity = true;
         }
-        this.effect.baseTick(this);
+        //this.effect.baseTick(this);
     }
 
     @Override

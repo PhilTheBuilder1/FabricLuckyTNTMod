@@ -14,6 +14,7 @@ public class TNTXStrengthEffect extends PrimedTNTEffect {
     float knockbackStrength = 1f;
     float resistanceImpact = 1f;
     int fuse = 80;
+    int experiment = 0;
     ExplosionBehavior behavior = null;
     public TNTXStrengthEffect() {
 
@@ -78,10 +79,23 @@ public class TNTXStrengthEffect extends PrimedTNTEffect {
         return this;
     }
 
+    public TNTXStrengthEffect experiment(int i) {
+        this.experiment = i;
+        return this;
+    }
+
     @Override
     public void serverExplosion(IExplosiveEntity entity) {
         ImprovedExplosion explosion = new ImprovedExplosion(entity.world(), entity.pos(), strength);
-        explosion.doBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+        switch(experiment) {
+            case 0 -> explosion.doBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 1 -> explosion.doSphericalBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 2 -> explosion.doCylindricalBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 3 -> explosion.doCoveredCylindricalBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 4 -> explosion.doRandomBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 5 -> explosion.doFilledBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 6 -> explosion.doEmpoweredBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+        }
         explosion.doEntityExplosion(knockbackStrength, damageEntities);
     }
 }

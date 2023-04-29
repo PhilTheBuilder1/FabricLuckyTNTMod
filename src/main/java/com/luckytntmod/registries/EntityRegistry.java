@@ -5,10 +5,7 @@ import com.luckytntmod.entity.LExplosiveProjectile;
 import com.luckytntmod.entity.LTNTEntity;
 import com.luckytntmod.entity.LivingPrimedLTNT;
 import com.luckytntmod.tnteffects.*;
-import com.luckytntmod.tnteffects.projectiles.HydrogenBombBombEffect;
-import com.luckytntmod.tnteffects.projectiles.MeteorEffect;
-import com.luckytntmod.tnteffects.projectiles.MiniMeteorEffect;
-import com.luckytntmod.tnteffects.projectiles.TsarBombBombEffect;
+import com.luckytntmod.tnteffects.projectiles.*;
 import com.luckytntmod.util.TNTXStrengthEffect;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.Blocks;
@@ -97,7 +94,17 @@ public class EntityRegistry {
     public static final EntityType<LTNTEntity> NUCLEAR_WASTE_TNT = LuckyTNTMod.RH.registerTNTEntity("nuclear_waste_tnt", BlockRegistry.NUCLEAR_WASTE_TNT, new NuclearWasteTNTEffect(15));
     public static final EntityType<LTNTEntity> STATIC_TNT = LuckyTNTMod.RH.registerTNTEntity("static_tnt", BlockRegistry.STATIC_TNT, new StaticTNTEffect());
     //Unimplemented Pumpkin Bomb TNT
-
+    //public static final EntityType<LTNTEntity> SMOKE_TNT = LuckyTNTMod.RH.registerTNTEntity("smoke_tnt", BlockRegistry.SMOKE_TNT, new SmokeTNTEffect());
+    public static final EntityType<LTNTEntity> TROLL_TNT = LuckyTNTMod.RH.registerTNTEntity("troll_tnt", Blocks.TNT, new TrollTNTEffect());
+    public static final EntityType<LTNTEntity> TROLL_TNT_MK2 = LuckyTNTMod.RH.registerTNTEntity("troll_tnt_mk2", Blocks.TNT, new TrollTNTEffect());
+    public static final EntityType<LTNTEntity> TROLL_TNT_MK3 = LuckyTNTMod.RH.registerTNTEntity("troll_tnt_mk3", Blocks.TNT, new TrollTNTMk3Effect());
+    public static final EntityType<LTNTEntity> CLUSTER_BOMB_TNT = LuckyTNTMod.RH.registerTNTEntity("cluster_bomb_tnt", BlockRegistry.CLUSTER_BOMB_TNT, new ClusterBombTNTEffect());
+    public static final EntityType<LTNTEntity> AIR_STRIKE = LuckyTNTMod.RH.registerTNTEntity("air_strike", BlockRegistry.AIR_STRIKE, new AirStrikeEffect());
+    public static final EntityType<LTNTEntity> SPAMMING_TNT = LuckyTNTMod.RH.registerTNTEntity("spamming_tnt", BlockRegistry.SPAMMING_TNT, new SpammingTNTEffect());
+    public static final EntityType<LTNTEntity> BOUNCING_TNT = LuckyTNTMod.RH.registerTNTEntity("bouncing_tnt", BlockRegistry.BOUNCING_TNT, new BouncingTNTEffect());
+    public static final EntityType<LTNTEntity> ROULETTE_TNT = LuckyTNTMod.RH.registerTNTEntity("roulette_tnt", BlockRegistry.ROULETTE_TNT, new RouletteTNTEffect(10));
+    public static final EntityType<LTNTEntity> SENSOR_TNT = LuckyTNTMod.RH.registerTNTEntity("sensor_tnt", BlockRegistry.SENSOR_TNT, new SensorTNTEffect());
+    public static final EntityType<LTNTEntity> RAINBOW_FIREWORK = LuckyTNTMod.RH.registerTNTEntity("rainbow_firework", BlockRegistry.RAINBOW_FIREWORK, new RainbowFireworkEffect());
 
     //God TNT
     public static final EntityType<LTNTEntity> TNT_X2000 = LuckyTNTMod.RH.registerTNTEntity("tnt_x2000", BlockRegistry.TNT_X2000, new TNTXStrengthEffect().fuse(400).strength(160f).randomVecLength(0.05f).knockbackStrength(15f).resistanceImpact(0.167f).isStrongExplosion());
@@ -117,6 +124,9 @@ public class EntityRegistry {
     public static final EntityType<LExplosiveProjectile> CHEMICAL_PROJECTILE = LuckyTNTMod.RH.registerExplosiveProjectile("chemical_projectile", new ChemicalTNTEffect(), 1f, Blocks.AIR);
     public static final EntityType<LExplosiveProjectile> TSAR_BOMB_BOMB = LuckyTNTMod.RH.registerExplosiveProjectile("tsar_bomba_bomb", new TsarBombBombEffect(), 1.2f);
     public static final EntityType<LExplosiveProjectile> HYDROGEN_BOMB_BOMB = LuckyTNTMod.RH.registerExplosiveProjectile("hydrogen_bomb_bomb", new HydrogenBombBombEffect(), 1.4f);
+    public static final EntityType<LExplosiveProjectile> CLUSTER_BOMB = LuckyTNTMod.RH.registerExplosiveProjectile("cluster_bomb", new ClusterBombEffect(), 1);
+    public static final EntityType<LExplosiveProjectile> SHRAPNEL = LuckyTNTMod.RH.registerExplosiveProjectile("shrapnel", new ShrapnelEffect(), 0.25f, Blocks.BLACKSTONE);
+    public static final EntityType<LExplosiveProjectile> BOMB = LuckyTNTMod.RH.registerExplosiveProjectile("bomb", new BombEffect(), 1);
 
     public static Predicate<LivingEntity> PREDICATE = living -> living instanceof PlayerEntity player && !player.isCreative() && !player.isSpectator();
 }

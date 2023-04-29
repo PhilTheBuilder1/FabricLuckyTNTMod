@@ -14,6 +14,10 @@ public interface IExplosiveEntity {
 
     World world();
 
+    default World level() {
+        return world();
+    }
+
     Entity getThis();
     double x();
     double y();

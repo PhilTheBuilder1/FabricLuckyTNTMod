@@ -68,6 +68,16 @@ public class LuckyTNTModClient implements ClientModInitializer {
 		EntityRendererRegistry.register(EntityRegistry.STATIC_TNT, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TSAR_BOMB, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.HYDROGEN_BOMB, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TROLL_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TROLL_TNT_MK2, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TROLL_TNT_MK3, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.CLUSTER_BOMB_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.AIR_STRIKE, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SPAMMING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.BOUNCING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ROULETTE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SENSOR_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.RAINBOW_FIREWORK, LTNTRenderer::new);
 
 		//Projectile
 		EntityRendererRegistry.register(EntityRegistry.METEOR, LTNTRenderer::new);
@@ -78,5 +88,8 @@ public class LuckyTNTModClient implements ClientModInitializer {
 		EntityRendererRegistry.register(EntityRegistry.CHEMICAL_PROJECTILE, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TSAR_BOMB_BOMB, BombRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.HYDROGEN_BOMB_BOMB, BombRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.CLUSTER_BOMB, BombRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SHRAPNEL, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.BOMB, BombRenderer::new);
 	}
 }

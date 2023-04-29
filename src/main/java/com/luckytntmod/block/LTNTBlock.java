@@ -117,9 +117,45 @@ public class LTNTBlock extends TntBlock {
             else {
                 LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
                 if(tnt == null) return;
+                tnt.setOwner(igniter);
                 world.spawnEntity(tnt);
                 world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
                 world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+                if(!block.shouldRandomlyFuse) {
+                    tnt.setVelocity(0, 0, 0);
+                }
+            }
+        }
+    }
+
+    public static void primeTnt(World world, BlockPos pos, @Nullable LivingEntity igniter, LTNTBlock block, boolean destroyedByExplosion) {
+        if (!world.isClient()) {
+            if(block.living) {
+                LivingPrimedLTNT tnt = LuckyTNTMod.RH.registeredLivingEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
+                if(tnt == null) return;
+                world.spawnEntity(tnt);
+                world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
+                world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+                if(destroyedByExplosion) {
+                    int i = tnt.getTNTFuse();
+                    tnt.setTNTFuse((short)(world.random.nextInt(i / 4) + i / 8));
+                }
+                if(!block.shouldRandomlyFuse) {
+                    tnt.setVelocity(0, 0, 0);
+                }
+            }
+            else {
+                LTNTEntity tnt = LuckyTNTMod.RH.registeredEntities.get(block.index).spawn((ServerWorld) world, pos, SpawnReason.MOB_SUMMONED);
+                if(tnt == null) return;
+                tnt.setOwner(igniter);
+                world.spawnEntity(tnt);
+                world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
+                world.emitGameEvent(igniter, GameEvent.PRIME_FUSE, pos);
+                if(destroyedByExplosion) {
+                    int i = tnt.getTNTFuse();
+                    i = i <= 0 ? 4 : i;
+                    tnt.setTNTFuse((short)(world.random.nextInt(i / 4 > 0 ? i / 4 : i ) + i / 8));
+                }
                 if(!block.shouldRandomlyFuse) {
                     tnt.setVelocity(0, 0, 0);
                 }
@@ -132,7 +168,7 @@ public class LTNTBlock extends TntBlock {
         if (world.isClient) {
             return;
         }
-        primeTnt(world, pos, explosion.getCausingEntity(), this);
+        primeTnt(world, pos, explosion.getCausingEntity(), this, true);
     }
 
     @Override

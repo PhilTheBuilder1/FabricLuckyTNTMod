@@ -35,6 +35,7 @@ public class MeteorEffect extends PrimedTNTEffect {
                 }
             }
         });
+        entity.destroy();
     }
 
     @Override

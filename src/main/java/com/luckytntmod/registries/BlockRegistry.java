@@ -1,10 +1,11 @@
 package com.luckytntmod.registries;
 
 import com.luckytntmod.LuckyTNTMod;
-import com.luckytntmod.block.LTNTBlock;
-import com.luckytntmod.block.NuclearWasteBlock;
+import com.luckytntmod.block.*;
+import com.luckytntmod.registryHelper.RegistryHelper;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -73,6 +74,18 @@ public class BlockRegistry {
     public static final LTNTBlock WITHERING_TNT = LuckyTNTMod.RH.registerTNTBlock("withering_tnt", "n");
     public static final LTNTBlock NUCLEAR_WASTE_TNT = LuckyTNTMod.RH.registerTNTBlock("nuclear_waste_tnt", "n");
     public static final LTNTBlock STATIC_TNT = LuckyTNTMod.RH.registerTNTBlock("static_tnt", "n", false, false);
+    //public static final LTNTBlock SMOKE_TNT = LuckyTNTMod.RH.registerTNTBlock("smoke_tnt", "n", false, false);
+    public static final LTNTBlock TROLL_TNT = LuckyTNTMod.RH.registerTNTBlock("troll_tnt", new TrollTNTBlock(AbstractBlock.Settings.of(Material.TNT, DyeColor.BLACK).dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), LuckyTNTMod.RH.index, "n"));
+    public static final LTNTBlock TROLL_TNT_MK2 = LuckyTNTMod.RH.registerTNTBlock("troll_tnt_mk2", new TrollTNTMk2Block(AbstractBlock.Settings.of(Material.TNT, DyeColor.BLACK).dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), LuckyTNTMod.RH.index, "n"));
+    public static final LTNTBlock TROLL_TNT_MK3 = LuckyTNTMod.RH.registerTNTBlock("troll_tnt_mk3", new TrollTNTMk3Block(AbstractBlock.Settings.of(Material.TNT, DyeColor.BLACK).dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), LuckyTNTMod.RH.index, "n"));
+    public static final LTNTBlock CLUSTER_BOMB_TNT = LuckyTNTMod.RH.registerTNTBlock("cluster_bomb", "n");
+    public static final LTNTBlock AIR_STRIKE = LuckyTNTMod.RH.registerTNTBlock("air_strike", "n");
+    public static final LTNTBlock SPAMMING_TNT = LuckyTNTMod.RH.registerTNTBlock("spamming_tnt", "n");
+    public static final LTNTBlock BOUNCING_TNT = LuckyTNTMod.RH.registerTNTBlock("bouncing_tnt", "n");
+    public static final LTNTBlock ROULETTE_TNT = LuckyTNTMod.RH.registerTNTBlock("roulette_tnt", "n");
+    public static final LTNTBlock SENSOR_TNT = LuckyTNTMod.RH.registerTNTBlock("sensor_tnt", "n");
+    public static final LTNTBlock RAINBOW_FIREWORK = LuckyTNTMod.RH.registerTNTBlock("rainbow_firework", "n");
+
 
     //God TNT
     public static final LTNTBlock TNT_X2000 = LuckyTNTMod.RH.registerTNTBlock("tnt_x2000", "g");

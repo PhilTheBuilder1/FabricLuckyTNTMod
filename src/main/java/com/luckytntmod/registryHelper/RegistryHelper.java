@@ -34,11 +34,20 @@ public class RegistryHelper {
     public final ArrayList<EntityType<LTNTEntity>> registeredEntities = new ArrayList<>();
     public final ArrayList<EntityType<LivingPrimedLTNT>> registeredLivingEntities = new ArrayList<>();
     public static final List<Pair<LTNTBlock, Item>> TNT_DISPENSER_REGISTRY_LIST = new ArrayList<>();
-    private int index = 0;
-    private int livingIndex = 0;
+    public int index = 0;
+    public int livingIndex = 0;
 
     public LTNTBlock registerTNTBlock(String registryName, String tab) {
         LTNTBlock block = new LTNTBlock(AbstractBlock.Settings.of(Material.TNT, DyeColor.BLACK).dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), index, tab);
+        Registry.register(Registries.BLOCK, new Identifier(NAMESPACE, registryName), block);
+        Item item = Registry.register(Registries.ITEM, new Identifier(NAMESPACE, registryName), new BlockItem(block, new FabricItemSettings()));
+        registeredBlocks.add(block);
+        index++;
+        TNT_DISPENSER_REGISTRY_LIST.add(new Pair<>(block, item));
+        return block;
+    }
+
+    public LTNTBlock registerTNTBlock(String registryName, LTNTBlock block) {
         Registry.register(Registries.BLOCK, new Identifier(NAMESPACE, registryName), block);
         Item item = Registry.register(Registries.ITEM, new Identifier(NAMESPACE, registryName), new BlockItem(block, new FabricItemSettings()));
         registeredBlocks.add(block);

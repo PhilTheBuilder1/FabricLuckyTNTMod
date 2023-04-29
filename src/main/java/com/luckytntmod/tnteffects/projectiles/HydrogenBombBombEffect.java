@@ -40,6 +40,8 @@ public class HydrogenBombBombEffect extends PrimedTNTEffect implements NuclearBo
         for(LivingEntity living : list) {
             living.addStatusEffect(new StatusEffectInstance(EffectRegistry.CONTAMINATED_EFFECT.get(), 4800, 0, true, true, true));
         }*/
+
+        ent.destroy();
     }
 
     @Override

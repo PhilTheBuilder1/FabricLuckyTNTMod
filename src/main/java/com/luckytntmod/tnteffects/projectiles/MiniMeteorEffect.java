@@ -15,5 +15,6 @@ public class MiniMeteorEffect extends PrimedTNTEffect {
     public void serverExplosion(IExplosiveEntity entity) {
         TNTXStrengthEffect effect = new TNTXStrengthEffect().strength(7).randomVecLength(1.25f).createsFire();
         effect.serverExplosion(entity);
+        entity.destroy();
     }
 }

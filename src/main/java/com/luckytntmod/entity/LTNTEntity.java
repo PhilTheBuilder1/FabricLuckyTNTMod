@@ -10,12 +10,14 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class LTNTEntity extends TntEntity implements IExplosiveEntity {
     public Block block;
     public PrimedTNTEffect effect;
     private final World levelWorld;
     private final NbtCompound compound;
+    private LivingEntity igniter;
 
     public LTNTEntity(EntityType<? extends TntEntity> entityType, World world, Block block, PrimedTNTEffect effect) {
         super(entityType, world);
@@ -26,6 +28,20 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
         this.effect = effect;
         this.setFuse(this.effect.getDefaultFuse(this));
         this.compound = new NbtCompound();
+        this.igniter = null;
+    }
+
+    public LTNTEntity(EntityType<? extends TntEntity> entityType, World world, Block block, PrimedTNTEffect effect, @Nullable LivingEntity igniter) {
+        super(entityType, world);
+        this.levelWorld = world;
+        double d = world.random.nextDouble() * 6.2831854820251465;
+        this.setVelocity(-Math.sin(d) * 0.02, 0.2f, -Math.cos(d) * 0.02);
+        this.block = block;
+        this.effect = effect;
+        this.setFuse(this.effect.getDefaultFuse(this));
+        this.compound = new NbtCompound();
+        this.igniter = igniter;
+
     }
 
     @Override
@@ -94,7 +110,11 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
 
     @Override
     public LivingEntity owner() {
-        return this.getCausingEntity();
+        return this.igniter;
+    }
+
+    public void setOwner(LivingEntity igniter) {
+        this.igniter = igniter;
     }
 
     @Override

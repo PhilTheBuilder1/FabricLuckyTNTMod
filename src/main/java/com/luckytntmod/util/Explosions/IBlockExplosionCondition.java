@@ -5,6 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 @FunctionalInterface
+public
 interface IBlockExplosionCondition {
 
     boolean conditionMet(World level, BlockPos pos, BlockState state, double distance);
