@@ -1,7 +1,10 @@
 package com.luckytntmod.renderer;
 
 import com.luckytntmod.LuckyTNTMod;
+import com.luckytntmod.entity.LTNTEntity;
 import com.luckytntmod.util.IExplosiveEntity;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.TntBlock;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
@@ -33,7 +36,7 @@ public class LTNTRenderer extends EntityRenderer<Entity> {
             matrixStack.push();
             matrixStack.translate(0, 0, 0);
             int i = ent.getTNTFuse();
-            if ((float) i - partialTicks + 1.0F < 10.0F && ent.getEffect().getBlockState((IExplosiveEntity) entity).getBlock() instanceof TntBlock) {
+            if ((float) i - partialTicks + 1.0F < 10.0F && ent.getEffect().setState((IExplosiveEntity) entity).getBlock() instanceof TntBlock) {
                 float f = 1.0F - ((float)i - partialTicks + 1.0F) / 10.0F;
                 f = Math.clamp(f, 0.0F, 1.0F);
                 f *= f;
@@ -43,15 +46,11 @@ public class LTNTRenderer extends EntityRenderer<Entity> {
             }
             matrixStack.scale(ent.getEffect().getSize((IExplosiveEntity)entity), ent.getEffect().getSize((IExplosiveEntity)entity), ent.getEffect().getSize((IExplosiveEntity)entity));
             matrixStack.translate(-0.5d, 0, -0.5d);
-            TntMinecartEntityRenderer.renderFlashingBlock(blockRenderer, ent.getBlock().getDefaultState(), matrixStack, vertexConsumerProvider, light, ent.getBlock() instanceof TntBlock && i / 5 % 2 == 0);
+            LTNTEntity e = (LTNTEntity) ent;
+            e.getEffect().setState(e);
+            TntMinecartEntityRenderer.renderFlashingBlock(blockRenderer, e.state == null ? ent.getBlock().getDefaultState() : e.state, matrixStack, vertexConsumerProvider, light, ent.getBlock() instanceof TntBlock && i / 5 % 2 == 0);
             matrixStack.pop();
         }
         super.render(entity, yaw, partialTicks, matrixStack, vertexConsumerProvider, light);
     }
-
-    /*@Override
-    public Identifier getTexture(Entity entity) {
-        return new Identifier(NAMESPACE, "test");
-    }*/
-
 }

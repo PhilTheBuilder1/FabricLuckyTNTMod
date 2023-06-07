@@ -62,20 +62,21 @@ public abstract class PrimedTNTEffect {
         return Blocks.TNT;
     }
 
-    public BlockState getBlockState(IExplosiveEntity entity) {
+    public BlockState setState(IExplosiveEntity entity) {
         return getBlock().getDefaultState();
     }
 
     public void baseTick(IExplosiveEntity entity) {
         World level = entity.world();
         if(level == null) return;
+        LuckyTNTMod.accessWorld = level;
         if(entity instanceof LTNTEntity || entity instanceof LivingPrimedLTNT) {
             if(entity.getTNTFuse() <= 0) {
                 if(entity.world() instanceof ServerWorld) {
                     if(playsSound()) {
                         level.playSound((Entity)entity, new BlockPos(entity.pos()), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4f, (1f + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f) * 0.7f);
                     }
-                    serverExplosion(entity);
+                    if(entity.world() != null) serverExplosion(entity);
                 }
                 entity.destroy();
             }
@@ -92,7 +93,7 @@ public abstract class PrimedTNTEffect {
                         if(playsSound()) {
                             level.playSound((Entity)entity, new BlockPos(entity.pos()), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4f, (1f + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f) * 0.7f);
                         }
-                        serverExplosion(entity);
+                        if(entity.world() != null && level != null) serverExplosion(entity);
                     }
                     ent.destroy();
                 }
@@ -102,7 +103,7 @@ public abstract class PrimedTNTEffect {
                     if(playsSound()) {
                         level.playSound((Entity)entity, new BlockPos(entity.pos()), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4f, (1f + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f) * 0.7f);
                     }
-                    serverExplosion(entity);
+                    if(entity.world() != null) serverExplosion(entity);
                 }
                 ent.destroy();
             }

@@ -1,14 +1,24 @@
 package com.luckytntmod;
 
+import com.luckytntmod.network.PacketHandler;
 import com.luckytntmod.registries.EntityRegistry;
 import com.luckytntmod.renderer.BombRenderer;
 import com.luckytntmod.renderer.LTNTRenderer;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.network.PacketByteBuf;
 
 public class LuckyTNTModClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
+		ClientPlayNetworking.registerGlobalReceiver(PacketHandler.TUNNELING_TNT_INIT, (client, handler, buf, responseSender) -> {
+			client.execute(() -> {
+				PacketByteBuf buffer = LuckyTNTMod.bufs.get(LuckyTNTMod.bufs.size()-1);
+				client.player.world.getEntityById(buffer.readInt()).getPersistentData().putString("direction", buffer.readString());
+			});
+		});
+
 		//TNT
 		EntityRendererRegistry.register(EntityRegistry.TNT_X5, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TNT_X20, LTNTRenderer::new);
@@ -78,6 +88,19 @@ public class LuckyTNTModClient implements ClientModInitializer {
 		EntityRendererRegistry.register(EntityRegistry.ROULETTE_TNT, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.SENSOR_TNT, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.RAINBOW_FIREWORK, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.XRAY_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.FARMING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.PHANTOM_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.SWAP_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.IGNITER_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.MULTIPLYING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.BUTTER_TNT, LTNTRenderer::new);
+		//EntityRendererRegistry.register(EntityRegistry.TNT_2_X2000, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TUNNELING_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.EYE_OF_THE_SAHARA, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.GLOBAL_DISASTER, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ASTEROID_BELT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.TETRAHEDRON_TNT, LTNTRenderer::new);
 
 		//Projectile
 		EntityRendererRegistry.register(EntityRegistry.METEOR, LTNTRenderer::new);

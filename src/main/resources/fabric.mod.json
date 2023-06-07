@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "fabricluckytntmod",
-	"version": "${version}",
+	"version": "1.0.5",
 	"name": "Lucky TNT Mod Fabric",
 	"description": "Fabric port of the Lucky TNT Mod, huge thanks goes to SlimingHD and Fleshcrafter for allowing this!",
 	"authors": [
@@ -36,5 +36,12 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1297": [
+				"com/luckytntmod/util/ITNTEntityInterface"
+			]
+		}
 	}
 }

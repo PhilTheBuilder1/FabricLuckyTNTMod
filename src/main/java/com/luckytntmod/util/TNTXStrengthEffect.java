@@ -6,13 +6,13 @@ import net.minecraft.world.explosion.ExplosionBehavior;
 public class TNTXStrengthEffect extends PrimedTNTEffect {
     float strength = 2f;
     boolean createsFire = false;
-    boolean isStrongExplosion = false;
-    boolean damageEntities = true;
-    float xzStrength = 1f;
-    float yStrength = 1f;
-    float randomVecLength = 1f;
-    float knockbackStrength = 1f;
-    float resistanceImpact = 1f;
+    public boolean isStrongExplosion = false;
+    public boolean damageEntities = true;
+    public float xzStrength = 1f;
+    public float yStrength = 1f;
+    public float randomVecLength = 1f;
+    public float knockbackStrength = 1f;
+    public float resistanceImpact = 1f;
     int fuse = 80;
     int experiment = 0;
     ExplosionBehavior behavior = null;
@@ -89,12 +89,9 @@ public class TNTXStrengthEffect extends PrimedTNTEffect {
         ImprovedExplosion explosion = new ImprovedExplosion(entity.world(), entity.pos(), strength);
         switch(experiment) {
             case 0 -> explosion.doBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
-            case 1 -> explosion.doSphericalBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
-            case 2 -> explosion.doCylindricalBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
-            case 3 -> explosion.doCoveredCylindricalBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
-            case 4 -> explosion.doRandomBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
-            case 5 -> explosion.doFilledBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
-            case 6 -> explosion.doEmpoweredBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 1 -> explosion.doOnionBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 2 -> explosion.doFastOnionBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
+            case 3 -> explosion.doFastBetterOnionBlockExplosion(xzStrength, yStrength, resistanceImpact, randomVecLength, createsFire, isStrongExplosion);
         }
         explosion.doEntityExplosion(knockbackStrength, damageEntities);
     }

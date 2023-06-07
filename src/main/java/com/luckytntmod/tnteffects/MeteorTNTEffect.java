@@ -9,6 +9,7 @@ public class MeteorTNTEffect extends PrimedTNTEffect {
     @Override
     public void serverExplosion(IExplosiveEntity entity) {
         LExplosiveProjectile meteor = EntityRegistry.METEOR.create(entity.world());
+        if(meteor == null) return;
         meteor.setPos(entity.x(), entity.y() + 128, entity.z());
         meteor.setOwner(entity.owner());
         entity.world().spawnEntity(meteor);

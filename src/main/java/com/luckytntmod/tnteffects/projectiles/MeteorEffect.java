@@ -8,6 +8,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 
 public class MeteorEffect extends PrimedTNTEffect {
     private final int strength;
@@ -20,22 +21,28 @@ public class MeteorEffect extends PrimedTNTEffect {
 
     @Override
     public void serverExplosion(IExplosiveEntity entity) {
-        ImprovedExplosion explosion = new ImprovedExplosion(entity.world(), entity.pos(), strength);
-        explosion.doEntityExplosion(3, true);
-        ExplosionHelper.doSphericalExplosion(entity.world(), entity.pos(), strength, (level, pos, state, distance) -> {
-            if(distance <= (strength - strength / 8) && state.getBlock().getBlastResistance() <= 100) {
-                state.getBlock().onDestroyedByExplosion(level, pos, explosion);
-                level.setBlockState(pos, Blocks.AIR.getDefaultState());
-            }
-            else if(Math.random() < 0.6f && state.getBlock().getBlastResistance() <= 100) {
-                state.getBlock().onDestroyedByExplosion(level, pos, explosion);
-                level.setBlockState(pos, Blocks.AIR.getDefaultState());
-                if(Math.random() < 0.25f && level.getBlockState(pos.down()).isSideSolidFullSquare(level, pos, Direction.UP)) {
-                    level.setBlockState(pos, FireBlock.getState(level, pos));
+        try {
+            World world = entity.world();
+            if(world == null) return;
+            ImprovedExplosion explosion = new ImprovedExplosion(world, entity.pos(), strength);
+            explosion.doEntityExplosion(3, true);
+            ExplosionHelper.doSphericalExplosion(world, entity.pos(), strength, (level, pos, state, distance) -> {
+                if(distance <= (strength - strength / 8) && state.getBlock().getBlastResistance() <= 100) {
+                    state.getBlock().onDestroyedByExplosion(level, pos, explosion);
+                    level.setBlockState(pos, Blocks.AIR.getDefaultState());
                 }
-            }
-        });
-        entity.destroy();
+                else if(Math.random() < 0.6f && state.getBlock().getBlastResistance() <= 100) {
+                    state.getBlock().onDestroyedByExplosion(level, pos, explosion);
+                    level.setBlockState(pos, Blocks.AIR.getDefaultState());
+                    if(Math.random() < 0.25f && level.getBlockState(pos.down()).isSideSolidFullSquare(level, pos, Direction.UP)) {
+                        level.setBlockState(pos, FireBlock.getState(level, pos));
+                    }
+                }
+            });
+            entity.destroy();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

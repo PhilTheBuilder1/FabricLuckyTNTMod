@@ -3,6 +3,7 @@ package com.luckytntmod.entity;
 import com.luckytntmod.util.IExplosiveEntity;
 import com.luckytntmod.util.PrimedTNTEffect;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -14,10 +15,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class LTNTEntity extends TntEntity implements IExplosiveEntity {
     public Block block;
+
+    public BlockState state;
+
     public PrimedTNTEffect effect;
     private final World levelWorld;
-    private final NbtCompound compound;
     private LivingEntity igniter;
+    private int ticks = 0;
 
     public LTNTEntity(EntityType<? extends TntEntity> entityType, World world, Block block, PrimedTNTEffect effect) {
         super(entityType, world);
@@ -27,8 +31,8 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
         this.block = block;
         this.effect = effect;
         this.setFuse(this.effect.getDefaultFuse(this));
-        this.compound = new NbtCompound();
         this.igniter = null;
+        this.state = null;
     }
 
     public LTNTEntity(EntityType<? extends TntEntity> entityType, World world, Block block, PrimedTNTEffect effect, @Nullable LivingEntity igniter) {
@@ -39,17 +43,16 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
         this.block = block;
         this.effect = effect;
         this.setFuse(this.effect.getDefaultFuse(this));
-        this.compound = new NbtCompound();
         this.igniter = igniter;
 
     }
 
     @Override
     public void tick() {
+        ticks++;
         if (!this.hasNoGravity()) {
             this.setVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
         }
-
         this.move(MovementType.SELF, this.getVelocity());
         this.setVelocity(this.getVelocity().multiply(0.98));
         if (this.onGround) {
@@ -81,6 +84,11 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
     @Override
     public World world() {
         return this.levelWorld;
+    }
+
+    @Override
+    public World level() {
+        return IExplosiveEntity.super.level();
     }
 
     @Override
@@ -126,6 +134,7 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
     public void setTNTFuse(int fuse) {
         this.setFuse(fuse);
     }
+    
 
     private void explode() {
         world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.MASTER, 1.0F, 1.0F);
@@ -139,12 +148,12 @@ public class LTNTEntity extends TntEntity implements IExplosiveEntity {
     }
 
     @Override
-    public NbtCompound getPersistentData() {
-        return compound;
+    public Block getBlock() {
+        return this.block;
     }
 
     @Override
-    public Block getBlock() {
-        return this.block;
+    public NbtCompound getPersistentData() {
+        return super.getPersistentData();
     }
 }

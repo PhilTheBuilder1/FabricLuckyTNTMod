@@ -116,6 +116,7 @@ public class LivingPrimedLTNT extends PathAwareEntity implements IExplosiveEntit
     public void setTNTFuse(int fuse) {
         this.dataTracker.set(FUSE, fuse);
     }
+
     @Override
     public double x() {
         return getX();

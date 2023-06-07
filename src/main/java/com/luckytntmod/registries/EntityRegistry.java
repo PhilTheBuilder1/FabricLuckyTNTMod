@@ -105,14 +105,27 @@ public class EntityRegistry {
     public static final EntityType<LTNTEntity> ROULETTE_TNT = LuckyTNTMod.RH.registerTNTEntity("roulette_tnt", BlockRegistry.ROULETTE_TNT, new RouletteTNTEffect(10));
     public static final EntityType<LTNTEntity> SENSOR_TNT = LuckyTNTMod.RH.registerTNTEntity("sensor_tnt", BlockRegistry.SENSOR_TNT, new SensorTNTEffect());
     public static final EntityType<LTNTEntity> RAINBOW_FIREWORK = LuckyTNTMod.RH.registerTNTEntity("rainbow_firework", BlockRegistry.RAINBOW_FIREWORK, new RainbowFireworkEffect());
+    public static final EntityType<LTNTEntity> XRAY_TNT = LuckyTNTMod.RH.registerTNTEntity("xray_tnt", BlockRegistry.XRAY_TNT, new XRayTNTEffect(40));
+    public static final EntityType<LTNTEntity> FARMING_TNT = LuckyTNTMod.RH.registerTNTEntity("farming_tnt", BlockRegistry.FARMING_TNT, new FarmingTNTEffect(10));
+    public static final EntityType<LTNTEntity> PHANTOM_TNT = LuckyTNTMod.RH.registerTNTEntity("phantom_tnt", BlockRegistry.PHANTOM_TNT, new PhantomTNTEffect());
+    public static final EntityType<LTNTEntity> SWAP_TNT = LuckyTNTMod.RH.registerTNTEntity("swap_tnt", BlockRegistry.SWAP_TNT, new SwapTNTEffect());
+    public static final EntityType<LTNTEntity> IGNITER_TNT = LuckyTNTMod.RH.registerTNTEntity("igniter_tnt", BlockRegistry.IGNITER_TNT, new IgniterTNTEffect(12));
+    public static final EntityType<LTNTEntity> MULTIPLYING_TNT = LuckyTNTMod.RH.registerTNTEntity("multiplying_tnt", BlockRegistry.MULTIPLYING_TNT, new MultiplyingTNTEffect());
+    public static final EntityType<LTNTEntity> BUTTER_TNT = LuckyTNTMod.RH.registerTNTEntity("butter_tnt", BlockRegistry.BUTTER_TNT, new ButterTNTEffect());
+    public static final EntityType<LTNTEntity> TUNNELING_TNT = LuckyTNTMod.RH.registerTNTEntity("tunneling_tnt", BlockRegistry.TUNNELING_TNT, new TunnelingTNTEffect());
 
     //God TNT
-    public static final EntityType<LTNTEntity> TNT_X2000 = LuckyTNTMod.RH.registerTNTEntity("tnt_x2000", BlockRegistry.TNT_X2000, new TNTXStrengthEffect().fuse(400).strength(160f).randomVecLength(0.05f).knockbackStrength(15f).resistanceImpact(0.167f).isStrongExplosion());
+    public static final EntityType<LTNTEntity> TNT_X2000 = LuckyTNTMod.RH.registerTNTEntity("tnt_x2000", BlockRegistry.TNT_X2000, new TNTXStrengthEffect().fuse(1).strength(160f).randomVecLength(0.05f).knockbackStrength(15f).resistanceImpact(0.167f).isStrongExplosion());
+    //public static final EntityType<LTNTEntity> TNT_2_X2000 = LuckyTNTMod.RH.registerTNTEntity("tnt_2_x2000", BlockRegistry.TNT_2_X2000, new TNTXStrengthEffect().fuse(1).strength(160f).randomVecLength(0.05f).knockbackStrength(15f).resistanceImpact(0.167f).isStrongExplosion().experiment(3));
     public static final EntityType<LTNTEntity> TSAR_BOMB = LuckyTNTMod.RH.registerTNTEntity("tsar_bomba", Blocks.AIR, new TsarBombEffect());
+    public static final EntityType<LTNTEntity> EYE_OF_THE_SAHARA = LuckyTNTMod.RH.registerTNTEntity("eye_of_the_sahara", BlockRegistry.EYE_OF_THE_SAHARA, new EyeOfTheSaharaEffect());
+    public static final EntityType<LTNTEntity> GLOBAL_DISASTER = LuckyTNTMod.RH.registerTNTEntity("global_disaster", BlockRegistry.GLOBAL_DISASTER, new GlobalDisasterEffect());
+    public static final EntityType<LTNTEntity> TETRAHEDRON_TNT = LuckyTNTMod.RH.registerTNTEntity("tetrahedron_tnt", BlockRegistry.TETRAHEDRON_TNT, new TetrahedronTNTEffect());
 
     //Doomsday TNT
     public static final EntityType<LTNTEntity> TNT_X10000 = LuckyTNTMod.RH.registerTNTEntity("tnt_x10000", BlockRegistry.TNT_X10000, new TNTXStrengthEffect().fuse(480).strength(360f).randomVecLength(0.05f).knockbackStrength(30f).resistanceImpact(0.167f).isStrongExplosion());
     public static final EntityType<LTNTEntity> HYDROGEN_BOMB = LuckyTNTMod.RH.registerTNTEntity("hydrogen_bomb", Blocks.AIR, new HydrogenBombEffect());
+    public static final EntityType<LTNTEntity> ASTEROID_BELT = LuckyTNTMod.RH.registerTNTEntity("asteroid_belt", BlockRegistry.ASTEROID_BELT, new AsteroidBeltEffect());
 
 
     //Explosive Projectiles

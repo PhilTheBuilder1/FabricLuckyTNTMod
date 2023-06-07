@@ -2,16 +2,18 @@ package com.luckytntmod.registries;
 
 import com.luckytntmod.LuckyTNTMod;
 import com.luckytntmod.block.*;
-import com.luckytntmod.registryHelper.RegistryHelper;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.*;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 
 public class BlockRegistry {
 
@@ -85,16 +87,33 @@ public class BlockRegistry {
     public static final LTNTBlock ROULETTE_TNT = LuckyTNTMod.RH.registerTNTBlock("roulette_tnt", "n");
     public static final LTNTBlock SENSOR_TNT = LuckyTNTMod.RH.registerTNTBlock("sensor_tnt", "n");
     public static final LTNTBlock RAINBOW_FIREWORK = LuckyTNTMod.RH.registerTNTBlock("rainbow_firework", "n");
+    public static final LTNTBlock XRAY_TNT = LuckyTNTMod.RH.registerTNTBlock("xray_tnt", new XRayTNTBlock(AbstractBlock.Settings.of(Material.GLASS).solidBlock(BlockRegistry::never).suffocates(BlockRegistry::never).blockVision(BlockRegistry::never).nonOpaque().dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), LuckyTNTMod.RH.index, "n"));
+    public static final LTNTBlock FARMING_TNT = LuckyTNTMod.RH.registerTNTBlock("farming_tnt", "n");
+    public static final LTNTBlock PHANTOM_TNT = LuckyTNTMod.RH.registerTNTBlock("phantom_tnt", "n");
+    public static final LTNTBlock SWAP_TNT = LuckyTNTMod.RH.registerTNTBlock("swap_tnt", "n");
+    public static final LTNTBlock IGNITER_TNT = LuckyTNTMod.RH.registerTNTBlock("igniter_tnt", "n");
+    public static final LTNTBlock MULTIPLYING_TNT = LuckyTNTMod.RH.registerTNTBlock("multiplying_tnt", "n");
+    public static final LTNTBlock BUTTER_TNT = LuckyTNTMod.RH.registerTNTBlock("butter_tnt", "n");
+    public static final TunnelingTNTBlock TUNNELING_TNT = (TunnelingTNTBlock) LuckyTNTMod.RH.registerTNTBlock("tunneling_tnt", new TunnelingTNTBlock(AbstractBlock.Settings.of(Material.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), LuckyTNTMod.RH.index, "n"));
 
 
     //God TNT
     public static final LTNTBlock TNT_X2000 = LuckyTNTMod.RH.registerTNTBlock("tnt_x2000", "g");
+    //public static final LTNTBlock TNT_2_X2000 = LuckyTNTMod.RH.registerTNTBlock("tnt_2_x2000", "g");
     public static final LTNTBlock TSAR_BOMB = LuckyTNTMod.RH.registerTNTBlock("tsar_bomba", "g");
+    public static final LTNTBlock EYE_OF_THE_SAHARA = LuckyTNTMod.RH.registerTNTBlock("eye_of_the_sahara", "g");
+    public static final LTNTBlock GLOBAL_DISASTER = LuckyTNTMod.RH.registerTNTBlock("global_disaster", "g");
+    public static final LTNTBlock TETRAHEDRON_TNT = LuckyTNTMod.RH.registerTNTBlock("tetrahedron_tnt", "g");
 
     //Doomsday TNT
     public static final LTNTBlock TNT_X10000 = LuckyTNTMod.RH.registerTNTBlock("tnt_x10000", "d");
     public static final LTNTBlock HYDROGEN_BOMB = LuckyTNTMod.RH.registerTNTBlock("hydrogen_bomb", "d");
+    public static final LTNTBlock ASTEROID_BELT = LuckyTNTMod.RH.registerTNTBlock("asteroid_belt", "d");
 
     //Other
     public static final Block NUCLEAR_WASTE = Registry.register(Registries.BLOCK, new Identifier(LuckyTNTMod.NAMESPACE, "nuclear_waste"), new NuclearWasteBlock(AbstractBlock.Settings.of(Material.SNOW_LAYER, DyeColor.GREEN).sounds(BlockSoundGroup.SLIME).luminance(state -> 8).breakInstantly().noCollision().dropsNothing().ticksRandomly()));
+
+    private static boolean never(BlockState blockState, BlockView blockView, BlockPos blockPos) {
+        return false;
+    }
 }
