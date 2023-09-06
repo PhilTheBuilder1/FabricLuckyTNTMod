@@ -2,11 +2,8 @@ package com.luckytntmod.registries;
 
 import com.luckytntmod.LuckyTNTMod;
 import com.luckytntmod.block.*;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
@@ -88,6 +85,7 @@ public class BlockRegistry {
     public static final LTNTBlock SENSOR_TNT = LuckyTNTMod.RH.registerTNTBlock("sensor_tnt", "n");
     public static final LTNTBlock RAINBOW_FIREWORK = LuckyTNTMod.RH.registerTNTBlock("rainbow_firework", "n");
     public static final LTNTBlock XRAY_TNT = LuckyTNTMod.RH.registerTNTBlock("xray_tnt", new XRayTNTBlock(AbstractBlock.Settings.of(Material.GLASS).solidBlock(BlockRegistry::never).suffocates(BlockRegistry::never).blockVision(BlockRegistry::never).nonOpaque().dropsLike(Blocks.TNT).sounds(Blocks.TNT.getSoundGroup(Blocks.TNT.getDefaultState())), LuckyTNTMod.RH.index, "n"));
+
     public static final LTNTBlock FARMING_TNT = LuckyTNTMod.RH.registerTNTBlock("farming_tnt", "n");
     public static final LTNTBlock PHANTOM_TNT = LuckyTNTMod.RH.registerTNTBlock("phantom_tnt", "n");
     public static final LTNTBlock SWAP_TNT = LuckyTNTMod.RH.registerTNTBlock("swap_tnt", "n");
@@ -113,7 +111,16 @@ public class BlockRegistry {
     //Other
     public static final Block NUCLEAR_WASTE = Registry.register(Registries.BLOCK, new Identifier(LuckyTNTMod.NAMESPACE, "nuclear_waste"), new NuclearWasteBlock(AbstractBlock.Settings.of(Material.SNOW_LAYER, DyeColor.GREEN).sounds(BlockSoundGroup.SLIME).luminance(state -> 8).breakInstantly().noCollision().dropsNothing().ticksRandomly()));
 
-    private static boolean never(BlockState blockState, BlockView blockView, BlockPos blockPos) {
+    private static boolean never(BlockState state, BlockView world, BlockPos pos) {
         return false;
+    }
+
+    private static boolean never(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityType<?> entityType) {
+        return false;
+    }
+
+
+    private static Block register(String id, Block block) {
+        return Registry.register(Registries.BLOCK, id, block);
     }
 }

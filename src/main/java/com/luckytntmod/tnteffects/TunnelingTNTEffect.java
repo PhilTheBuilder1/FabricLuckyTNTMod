@@ -83,7 +83,7 @@ public class TunnelingTNTEffect extends PrimedTNTEffect {
     }
 
     public BlockState setState(IExplosiveEntity entity) {
-        System.out.println("Thing2: " + ((Entity) entity).getPersistentData().getString("direction"));
+        //System.out.println("Thing2: " + ((Entity) entity).getPersistentData().getString("direction"));
         ((LTNTEntity) entity).state = BlockRegistry.TUNNELING_TNT.getDefaultState().with(TunnelingTNTBlock.FACING, Direction.byName(((Entity) entity).getPersistentData().getString("direction")) != null ? Direction.byName(((Entity) entity).getPersistentData().getString("direction")) : Direction.EAST);
         return ((LTNTEntity) entity).state;
     }

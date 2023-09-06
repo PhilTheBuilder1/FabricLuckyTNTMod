@@ -12,7 +12,6 @@ import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
@@ -20,8 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 public class LuckyTNTMod implements ModInitializer {
 
@@ -32,7 +29,6 @@ public class LuckyTNTMod implements ModInitializer {
 	private static ItemGroup GOD_TNT;
 	private static ItemGroup DOOMSDAY_TNT;
 	public static World accessWorld = null;
-	public static ArrayList<PacketByteBuf> bufs = new ArrayList<>();
 	@Override
 	public void onInitialize() {
 		BlockRegistry.init();

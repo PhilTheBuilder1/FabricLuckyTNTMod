@@ -1,23 +1,28 @@
 package com.luckytntmod;
 
 import com.luckytntmod.network.PacketHandler;
+import com.luckytntmod.registries.BlockRegistry;
 import com.luckytntmod.registries.EntityRegistry;
 import com.luckytntmod.renderer.BombRenderer;
 import com.luckytntmod.renderer.LTNTRenderer;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.client.render.RenderLayer;
 
 public class LuckyTNTModClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		ClientPlayNetworking.registerGlobalReceiver(PacketHandler.TUNNELING_TNT_INIT, (client, handler, buf, responseSender) -> {
+			int id = buf.readInt();
+			String direction = buf.readString();
 			client.execute(() -> {
-				PacketByteBuf buffer = LuckyTNTMod.bufs.get(LuckyTNTMod.bufs.size()-1);
-				client.player.world.getEntityById(buffer.readInt()).getPersistentData().putString("direction", buffer.readString());
+				ClientAccess.setEntityStringTag("direction", direction, id);
 			});
 		});
+
+		BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.XRAY_TNT, RenderLayer.getTranslucent());
 
 		//TNT
 		EntityRendererRegistry.register(EntityRegistry.TNT_X5, LTNTRenderer::new);

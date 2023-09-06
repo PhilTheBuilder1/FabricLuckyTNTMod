@@ -85,7 +85,7 @@ public class TunnelingTNTBlock extends LTNTBlock {
         tnt.getPersistentData().putString("direction", world.getBlockState(pos).getBlock() instanceof TunnelingTNTBlock ? world.getBlockState(pos).get(FACING).getName() : "east");
         System.out.println("Thing: " + tnt.getPersistentData().getString("direction"));
         tnt.setPosition(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
-        ((TunnelingTNTEffect) tnt.effect).setState(tnt);
+        tnt.effect.setState(tnt);
         System.out.println("Thing: " + tnt.getPersistentData().getString("direction"));
         world.spawnEntity(tnt);
         world.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.MASTER, 1.0F, 1.0F);
@@ -95,10 +95,9 @@ public class TunnelingTNTBlock extends LTNTBlock {
         }
         if(world.isClient()) return;
         PacketByteBuf buf = PacketByteBufs.create();
-        LuckyTNTMod.bufs.add(buf);
         buf.writeInt(tnt.getId());
         buf.writeString(tnt.getPersistentData().getString("direction"));
-        for(ServerPlayerEntity player : PlayerLookup.world((ServerWorld) world)) {
+        for(ServerPlayerEntity player : PlayerLookup.world(((ServerWorld) world))) {
             ServerPlayNetworking.send(player, PacketHandler.TUNNELING_TNT_INIT, buf);
         }
     }
