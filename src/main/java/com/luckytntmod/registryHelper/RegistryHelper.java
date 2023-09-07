@@ -31,7 +31,7 @@ import java.util.List;
 public class RegistryHelper {
     private static final String NAMESPACE = LuckyTNTMod.NAMESPACE;
     public final ArrayList<LTNTBlock> registeredBlocks = new ArrayList<>();
-    public final ArrayList<EntityType<LTNTEntity>> registeredEntities = new ArrayList<>();
+    public final ArrayList<EntityType<? extends LTNTEntity>> registeredEntities = new ArrayList<>();
     public final ArrayList<EntityType<LivingPrimedLTNT>> registeredLivingEntities = new ArrayList<>();
     public static final List<Pair<LTNTBlock, Item>> TNT_DISPENSER_REGISTRY_LIST = new ArrayList<>();
     public int index = 0;
@@ -92,6 +92,11 @@ public class RegistryHelper {
                 new Identifier(NAMESPACE, registryName),
                 FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<LTNTEntity> type, World world) -> new LTNTEntity(type, world, block, effect)).requires().dimensions(EntityDimensions.fixed(0.98f, 0.98f)).build()
         );
+        registeredEntities.add(entity);
+        return entity;
+    }
+
+    public EntityType<? extends LTNTEntity> registerTNTEntity(EntityType<? extends LTNTEntity> entity) {
         registeredEntities.add(entity);
         return entity;
     }

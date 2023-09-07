@@ -106,6 +106,8 @@ public class LuckyTNTModClient implements ClientModInitializer {
 		EntityRendererRegistry.register(EntityRegistry.GLOBAL_DISASTER, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.ASTEROID_BELT, LTNTRenderer::new);
 		EntityRendererRegistry.register(EntityRegistry.TETRAHEDRON_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.ORE_TNT, LTNTRenderer::new);
+		EntityRendererRegistry.register(EntityRegistry.PHYSICS_TNT, LTNTRenderer::new);
 
 		//Projectile
 		EntityRendererRegistry.register(EntityRegistry.METEOR, LTNTRenderer::new);

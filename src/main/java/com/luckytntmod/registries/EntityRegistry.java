@@ -4,6 +4,7 @@ import com.luckytntmod.LuckyTNTMod;
 import com.luckytntmod.entity.LExplosiveProjectile;
 import com.luckytntmod.entity.LTNTEntity;
 import com.luckytntmod.entity.LivingPrimedLTNT;
+import com.luckytntmod.entity.PrimedOreTNT;
 import com.luckytntmod.tnteffects.*;
 import com.luckytntmod.tnteffects.projectiles.*;
 import com.luckytntmod.util.TNTXStrengthEffect;
@@ -16,6 +17,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -113,6 +117,8 @@ public class EntityRegistry {
     public static final EntityType<LTNTEntity> MULTIPLYING_TNT = LuckyTNTMod.RH.registerTNTEntity("multiplying_tnt", BlockRegistry.MULTIPLYING_TNT, new MultiplyingTNTEffect());
     public static final EntityType<LTNTEntity> BUTTER_TNT = LuckyTNTMod.RH.registerTNTEntity("butter_tnt", BlockRegistry.BUTTER_TNT, new ButterTNTEffect());
     public static final EntityType<LTNTEntity> TUNNELING_TNT = LuckyTNTMod.RH.registerTNTEntity("tunneling_tnt", BlockRegistry.TUNNELING_TNT, new TunnelingTNTEffect());
+    public static final EntityType<LTNTEntity> PHYSICS_TNT = LuckyTNTMod.RH.registerTNTEntity("physics_tnt", BlockRegistry.PHYSICS_TNT, new PhysicsTNTEffect(15));
+    public static final EntityType<PrimedOreTNT> ORE_TNT = (EntityType<PrimedOreTNT>) LuckyTNTMod.RH.registerTNTEntity(Registry.register(Registries.ENTITY_TYPE, new Identifier(LuckyTNTMod.NAMESPACE, "ore_tnt"), FabricEntityTypeBuilder.create(SpawnGroup.MISC, (EntityType<PrimedOreTNT> type, World world) -> new PrimedOreTNT(type, world, BlockRegistry.ORE_TNT, new OreTNTEffect())).requires().dimensions(EntityDimensions.fixed(0.98f, 0.98f)).build()));
 
     //God TNT
     public static final EntityType<LTNTEntity> TNT_X2000 = LuckyTNTMod.RH.registerTNTEntity("tnt_x2000", BlockRegistry.TNT_X2000, new TNTXStrengthEffect().fuse(1).strength(160f).randomVecLength(0.05f).knockbackStrength(15f).resistanceImpact(0.167f).isStrongExplosion());
@@ -140,6 +146,4 @@ public class EntityRegistry {
     public static final EntityType<LExplosiveProjectile> CLUSTER_BOMB = LuckyTNTMod.RH.registerExplosiveProjectile("cluster_bomb", new ClusterBombEffect(), 1);
     public static final EntityType<LExplosiveProjectile> SHRAPNEL = LuckyTNTMod.RH.registerExplosiveProjectile("shrapnel", new ShrapnelEffect(), 0.25f, Blocks.BLACKSTONE);
     public static final EntityType<LExplosiveProjectile> BOMB = LuckyTNTMod.RH.registerExplosiveProjectile("bomb", new BombEffect(), 1);
-
-    public static Predicate<LivingEntity> PREDICATE = living -> living instanceof PlayerEntity player && !player.isCreative() && !player.isSpectator();
 }
